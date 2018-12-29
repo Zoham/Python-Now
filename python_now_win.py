@@ -16,8 +16,14 @@ with sr.Microphone() as source:
         # Process Audio ---------------------------------------------------
         try:
             out = r.recognize_google(audio)
-            os.popen(out).read()
-            print "Captured It! - "out
+            os.system(out)
+            print "Captured It! - " + out
+
+            say = "mshta"
+            say = say + " vbscript:Execute(\"CreateObject(\"\"SAPI.SpVoice\"\")"
+            say = say + ".Speak(\"\"" + out + "\"\")(window.close)\")"
+            os.system(say)
+            
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
         except sr.RequestError as e:
